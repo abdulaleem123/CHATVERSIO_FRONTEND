@@ -1,0 +1,38 @@
+[
+  {
+    "file": "sample-business-0.mp3",
+    "seconds": 7.86
+  },
+  {
+    "file": "sample-business-1.mp3",
+    "seconds": 7.08
+  },
+  {
+    "file": "sample-clinic-0.mp3",
+    "seconds": 5.41
+  },
+  {
+    "file": "sample-clinic-1.mp3",
+    "seconds": 6.16
+  },
+  {
+    "file": "sample-property-0.mp3",
+    "seconds": 6.01
+  },
+  {
+    "file": "sample-property-1.mp3",
+    "seconds": 6.84
+  },
+  {
+    "file": "sample-service-0.mp3",
+    "seconds": 6.74
+  },
+  {
+    "file": "sample-service-1.mp3",
+    "seconds": 7.94
+  },
+  {
+    "file": "after-hours.mp4",
+    "seconds": 18.0
+  }
+]

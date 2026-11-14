@@ -1,0 +1,47 @@
+<section class="hero" aria-labelledby="hero-title">
+    <div class="hero-light" aria-hidden="true"></div><canvas id="sound-field" aria-hidden="true"></canvas>
+    <div class="wrap hero-layout"><div class="hero-copy">
+    <p class="eyebrow"><i class="status-dot"></i>Chat · Sales · Voice</p><h1 id="hero-title"><span>Never miss</span><em>a hello.</em></h1>
+    <p class="hero-deck">Answer website visitors, follow up with buyers and take calls after hours. Your team gets the lead, the context and the next step.</p>
+    <div class="actions"><a href="/schedule-event/" class="button primary">Book a discovery call<i aria-hidden="true" class="arrow diagonal"></i></a><button type="button" class="film-trigger"><i class="play-icon" aria-hidden="true"></i><span>Watch the demo<small>00:18</small></span></button></div></div>
+    <figure class="soundstage cast-stage" data-current="chat" aria-label="Explore the three agent characters and the studio headset">
+      <canvas class="hero-3d" aria-hidden="true"></canvas>
+      <div class="stage-fallback" aria-hidden="true">
+        <img class="fallback-frame" src="/media/speech-frame.webp" width="1000" height="1000" alt="" decoding="async">
+        <img class="fallback-prop prop-chat" src="/media/messenger-sm.webp" width="570" height="570" alt="" decoding="async">
+        <img class="fallback-prop prop-sales" src="/media/ticket-sm.webp" width="570" height="570" alt="" decoding="async">
+        <img class="fallback-prop prop-voice" src="/media/headset-sm.webp" width="570" height="570" alt="" decoding="async">
+      </div>
+      <div class="portrait-scene" id="view-chat" data-scene-id="chat">
+          <div class="portrait-light" aria-hidden="true"></div><div class="portrait-orbit" aria-hidden="true"></div>
+          <div class="portrait-float"><img class="hero-person" src="/media/agent-chat.webp" srcset="/media/agent-chat-sm.webp 390w, /media/agent-chat.webp 724w" sizes="(max-width:720px) 78vw, 40vw" width="724" height="724" alt="Illustrated Chat Agent in a lilac overshirt" decoding="async" fetchpriority="high"></div>
+          <a class="persona-note" href="/services/website-assistants/"><span>Website conversations</span><strong>Chat Agent</strong><i aria-hidden="true" class="arrow diagonal"></i></a>
+        </div><div class="portrait-scene" id="view-sales" data-scene-id="sales" hidden>
+          <div class="portrait-light" aria-hidden="true"></div><div class="portrait-orbit" aria-hidden="true"></div>
+          <div class="portrait-float"><img class="hero-person" src="/media/agent-sales.webp" srcset="/media/agent-sales-sm.webp 390w, /media/agent-sales.webp 724w" sizes="(max-width:720px) 78vw, 40vw" width="724" height="724" alt="Illustrated Sales Agent in glasses and an orange jacket" decoding="async" loading="lazy"></div>
+          <a class="persona-note" href="/services/sales-automation/"><span>Leads & follow-ups</span><strong>Sales Agent</strong><i aria-hidden="true" class="arrow diagonal"></i></a>
+        </div><div class="portrait-scene" id="view-voice" data-scene-id="voice" hidden>
+          <div class="portrait-light" aria-hidden="true"></div><div class="portrait-orbit" aria-hidden="true"></div>
+          <div class="portrait-float"><img class="hero-person" src="/media/agent-voice.webp" srcset="/media/agent-voice-sm.webp 390w, /media/agent-voice.webp 724w" sizes="(max-width:720px) 78vw, 40vw" width="724" height="724" alt="Illustrated Voice Agent wearing a copper-coloured headset" decoding="async" loading="lazy"></div>
+          <a class="persona-note" href="/services/voice-assistants/"><span>Inbound & outbound calls</span><strong>Voice Agent</strong><i aria-hidden="true" class="arrow diagonal"></i></a>
+        </div>
+      <div class="gear-view" id="view-gear" data-scene-id="gear" hidden>
+        <div class="turntable" tabindex="0" role="group" aria-label="3D studio headset. Drag horizontally or use the left and right arrow keys to rotate.">
+          <img class="hero-poster" src="/media/headset.webp" srcset="/media/headset-sm.webp 570w, /media/headset.webp 1230w" sizes="(max-width:720px) 90vw, 48vw" width="1230" height="1230" alt="Chrome and blue studio headset with a boom microphone" decoding="async" loading="lazy">
+          <video class="hero-loop" data-src="/media/operator-loop.webm" muted loop playsinline disablepictureinpicture aria-hidden="true" preload="none"></video>
+          <img class="turn-frame" alt="" hidden width="690" height="690"></div>
+        <div class="turn-controls"><button class="turn-arrow prev" aria-label="Rotate headset left" type="button"><i aria-hidden="true" class="arrow"></i></button>
+        <span>Drag to turn <i>360°</i></span><button type="button" class="turn-arrow" aria-label="Rotate headset right"><i aria-hidden="true" class="arrow"></i></button></div>
+      </div>
+      <figcaption class="cast-dock"><div class="cast-switches" role="group" aria-label="Choose an agent character"><button type="button" data-view="chat" aria-controls="view-chat" aria-pressed="true">Chat</button><button type="button" data-view="sales" aria-controls="view-sales" aria-pressed="false">Sales</button><button type="button" data-view="voice" aria-controls="view-voice" aria-pressed="false">Voice</button></div>
+      <button type="button" class="gear-switch" data-view="gear" aria-controls="view-gear" aria-pressed="false" aria-label="Explore the 360-degree headset"><i aria-hidden="true" class="orbit-icon"></i>360°</button></figcaption>
+    </figure></div>
+    <div class="hero-end wrap"><a href="#solutions" class="scroll-cue"><i></i> Meet the agents</a><button class="motion" type="button" aria-label="Pause ambient motion" aria-pressed="true"><i class="motion-icon" aria-hidden="true"></i><span>Motion on</span></button></div>
+    </section><script type="module" src="/hero-3d.js"></script><dialog id="showreel" aria-labelledby="film-title">
+      <div class="film-head"><div><p class="eyebrow">Chatversio / Demo film</p><h2 id="film-title">After hours.</h2></div>
+      <button type="button" data-close-film class="round icon-close" aria-label="Close demo film"></button></div>
+      <video controls muted playsinline preload="none" data-src="/media/after-hours.mp4" poster="/media/film-poster.webp">
+        <track kind="captions" srclang="en" label="English" src="/media/after-hours.vtt">
+      </video><div class="film-foot"><details><summary>Read the transcript</summary><p>The caller asks, “My AC stopped cooling. Can I get a visit tomorrow?” The agent replies, “What’s your ZIP code? And does tomorrow morning work?” Dispatch receives the repair request, service area and requested visit time.</p></details>
+      <button type="button" class="film-sound" aria-pressed="false" aria-label="Enable film sound">Sound off</button>
+      <a href="/#demo" class="film-demo">Try the workflow <i aria-hidden="true" class="arrow"></i></a></div></dialog>

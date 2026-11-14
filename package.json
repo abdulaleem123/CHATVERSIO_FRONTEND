@@ -1,0 +1,25 @@
+{
+  "name": "chatversio-signal-studio",
+  "private": true,
+  "scripts": {
+    "build:scene": "esbuild scene/hero.js --bundle --minify --format=esm --target=es2022 --outfile=dist/hero-3d.js",
+    "start": "node --env-file-if-exists=.env server/index.mjs",
+    "dev": "node --env-file-if-exists=.env server/index.mjs",
+    "build": "node scripts/build.mjs",
+    "build:pages": "node scripts/build.mjs --pages-only",
+    "test": "node --test tests/server.test.mjs tests/models.test.mjs",
+    "check": "node scripts/check.mjs",
+    "deliver": "node --env-file-if-exists=.env server/deliver.mjs"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.9"
+  },
+  "version": "1.0.0",
+  "description": "Approved Chatversio AI v7 interface and integration handoff",
+  "engines": {
+    "node": ">=22"
+  }
+}

@@ -1,0 +1,117 @@
+[
+  {
+    "url": "/about/",
+    "file": "dist/about/index.html",
+    "title": "About the studio \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/contact/",
+    "file": "dist/contact/index.html",
+    "title": "Tell us about your project \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/",
+    "file": "dist/index.html",
+    "title": "Chat Agent, Sales Agent &amp; Voice Agent \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/schedule-event/",
+    "file": "dist/schedule-event/index.html",
+    "title": "Book a discovery call \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/services/appointment-booking/",
+    "file": "dist/services/appointment-booking/index.html",
+    "title": "Appointment Booking \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/services/custom-platforms/",
+    "file": "dist/services/custom-platforms/index.html",
+    "title": "Custom Platforms &amp; Websites \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/services/customer-support/",
+    "file": "dist/services/customer-support/index.html",
+    "title": "Customer Support \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/services/documents/",
+    "file": "dist/services/documents/index.html",
+    "title": "Document Processing System \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/services/email-automation/",
+    "file": "dist/services/email-automation/index.html",
+    "title": "Email Automation \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/services/facebook-agent/",
+    "file": "dist/services/facebook-agent/index.html",
+    "title": "Facebook Messenger Agent \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/services/",
+    "file": "dist/services/index.html",
+    "title": "Agent solutions \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/services/instagram-agent/",
+    "file": "dist/services/instagram-agent/index.html",
+    "title": "Instagram Agent \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/services/integrations/",
+    "file": "dist/services/integrations/index.html",
+    "title": "Third-Party Integrations \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/services/internal-helpdesk/",
+    "file": "dist/services/internal-helpdesk/index.html",
+    "title": "Internal Helpdesk &amp; HR \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/services/lead-generation/",
+    "file": "dist/services/lead-generation/index.html",
+    "title": "Lead Generation Funnel \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/services/lead-research/",
+    "file": "dist/services/lead-research/index.html",
+    "title": "LinkedIn &amp; Lead Research \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/services/multilingual-agents/",
+    "file": "dist/services/multilingual-agents/index.html",
+    "title": "Multilingual Agents \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/services/sales-automation/",
+    "file": "dist/services/sales-automation/index.html",
+    "title": "Sales Agent \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/services/social-agents/",
+    "file": "dist/services/social-agents/index.html",
+    "title": "WhatsApp Agent \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/services/telegram-agent/",
+    "file": "dist/services/telegram-agent/index.html",
+    "title": "Telegram Agent \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/services/voice-assistants/",
+    "file": "dist/services/voice-assistants/index.html",
+    "title": "Voice Agent \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/services/web-data/",
+    "file": "dist/services/web-data/index.html",
+    "title": "Web Data Extraction \u00b7 Chatversio AI"
+  },
+  {
+    "url": "/services/website-assistants/",
+    "file": "dist/services/website-assistants/index.html",
+    "title": "Chat Agent \u00b7 Chatversio AI"
+  }
+]

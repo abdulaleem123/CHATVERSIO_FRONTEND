@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-14",
+  "baseline_version": 7,
+  "baseline_commit": "88629d9f62e97cca44f671003ec496b461127d15",
+  "pages": 23,
+  "html_partials": 15,
+  "automated_tests_passed": 11,
+  "automated_tests_failed": 0,
+  "local_references_checked": 951,
+  "glb_models_parsed": 4,
+  "voice_samples": 8,
+  "turntable_frames": 40,
+  "browser_forms_saved": true,
+  "live_webgl_visual_verification": false,
+  "webgl_limitation": "GPU disabled in QA browser; fallback tested",
+  "original_css_and_footer_preserved": true
+}
