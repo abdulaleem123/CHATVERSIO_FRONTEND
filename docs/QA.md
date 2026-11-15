@@ -19,7 +19,7 @@ No real customers, messages, CRM updates, emails or calendar events were used in
 | Integration panel | All 12 tool selectors update the panel |
 | Process / FAQ | Disclosure works; process keeps one item open |
 | Service directory | Channels 4, Growth 3, Operations 5, Support 3, All 15 |
-| Contact | Query prefill, generated brief, copy, actual submission and received status |
+| Contact | Same fields as the original site, direct submission and success state |
 | Booking | CTA opens form, date/time/preferences, actual request saved, pending-confirmation wording |
 | Mobile navigation | Opens/closes and closes with Escape |
 | Mobile width | No page-level horizontal overflow at the 390px test frame (375px content width) |

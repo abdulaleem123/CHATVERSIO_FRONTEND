@@ -1,9 +1,7 @@
 /* Public configuration only. Never put API keys or passwords in this file. */
 window.CHATVERSIO_CONFIG = Object.freeze({
-  enquiryEndpoint: '/api/enquiries',
-  bookingEndpoint: '/api/booking-requests',
-  // Set to your real Calendly/calendar URL to use instant provider booking.
-  // Empty means visitors can submit a preferred time for your team to confirm.
-  calendarUrl: '',
+  // Same endpoints the original website's contact and schedule pages post to.
+  contactEndpoint: '/api/contact',
+  scheduleEndpoint: '/api/schedule',
   requestTimeoutMs: 15000,
 });

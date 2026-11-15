@@ -1,36 +1,29 @@
 # Form API contract
 
-The contact UI first builds a reviewable brief, then **Send enquiry** posts it. The booking UI reviews preferences, then **Send meeting request** posts them. The form retains values on failure; controls lock during submission; retries reuse an idempotency key. Success requires an HTTP success status plus `{ "ok": true, "id": "…" }` from your server.
+The contact and schedule forms are the same forms used on the original Chatversio website. They post JSON with exactly the same fields, so an existing backend can be reused unchanged. A form succeeds on any HTTP 2xx response; on failure it shows `error` from the JSON body (or the original fallback message). Retries reuse an `X-Idempotency-Key` header, which an existing backend can ignore.
 
-## Enquiry
+## Contact form
 
-`POST /api/enquiries`
-
-Headers: `Content-Type: application/json`, `X-Idempotency-Key: <UUID>`.
+`POST /api/contact`
 
 ```json
 {
   "name": "Example Customer",
   "email": "customer@example.com",
-  "business": "Example Company",
   "phone": "",
-  "website": "example.com",
-  "solution": "voice-assistants",
+  "business": "Example Company",
+  "topic": "voice-agent",
+  "companyWebsite": "example.com",
   "message": "We want to handle after-hours enquiries.",
-  "timezone": "Asia/Karachi",
-  "companyWebsite": ""
+  "hp": ""
 }
 ```
 
-`companyWebsite` is the empty honeypot field. `website` is the real website field.
+`hp` is the hidden honeypot (must stay empty). `companyWebsite` is the visitor's real website. `topic` is one of `voice-agent`, `lead-follow-up`, `chatbot-crm`, `custom-ai`, `not-sure` or empty. Required: name, valid email, message.
 
-Required: name, valid email, message. Optional: business, phone, website, service slug. Validate again on the server. Reference limits: name 120, email 254, message 6000, website 1000, other fields 200 characters; JSON body at most 20,000 bytes.
+## Schedule form
 
-Successful response: HTTP 201, `{"ok":true,"id":"server-generated-id","status":"received"}`.
-
-## Meeting request
-
-`POST /api/booking-requests`, same headers.
+`POST /api/schedule`
 
 ```json
 {
@@ -38,17 +31,13 @@ Successful response: HTTP 201, `{"ok":true,"id":"server-generated-id","status":"
   "email": "customer@example.com",
   "date": "2026-12-01",
   "time": "14:30",
-  "platform": "Google Meet",
-  "timezone": "Asia/Karachi",
-  "companyWebsite": ""
+  "platform": "google-meet"
 }
 ```
 
-Date/time are the visitor's preferred **local wall-clock time**, paired with an IANA timezone. Do not interpret them as the server's timezone. The reference API validates a future local time and stores the preference; it does not reserve a slot, check clashes, send invites or create Zoom/Meet links. The production calendar backend must resolve daylight-saving ambiguity, check availability atomically and create the real event before claiming a booking.
+`platform` is `google-meet` or `zoom`. The form blocks a repeat booking in the same browser (`has_scheduled` in localStorage); one booking per email is enforced by your backend, as before, and a 409 response shows "That time slot is already taken."
 
-Successful request response: HTTP 201, `{"ok":true,"id":"server-generated-id","status":"requested"}`.
-
-To use your existing confirmed-booking flow, set `calendarUrl` to the actual external/provider booking URL. The top call-to-action opens that provider; the request form remains an alternative. Provider credentials never go in the frontend.
+The bundled reference server (`/api/contact`, `/api/schedule`; the older `/api/enquiries` and `/api/booking-requests` still work) only saves the submission to `data/`. It does not create Zoom/Google Meet events, check clashes or send email. Your production backend does that, exactly as the original site does.
 
 ## Failures and retries
 

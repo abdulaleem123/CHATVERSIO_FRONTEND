@@ -22,7 +22,7 @@ def cta(url=BOOK, text='Book a discovery call', style='primary'):
     return link(url,text+arrow(True),'button '+style)
 
 def brand():
-    return '<img src="/media/chatversio-brand-original.jpeg" width="860" height="290" alt="Chatversio AI" class="wordmark original-wordmark">'
+    return '<img src="/media/chatversio-logo-on-dark.png" width="798" height="165" alt="Chatversio AI" class="wordmark original-wordmark">'
 
 def eyebrow(text, dot=False):
     return '<p class="eyebrow">'+('<i class="status-dot"></i>' if dot else '')+text+'</p>'
@@ -54,19 +54,15 @@ def nav(path):
 def footer():
     icons=json.loads((ROOT/'art/footer-icons.json').read_text())
     icon=lambda name: icons[name]
-    main_links=[('/','Home','home'),('/about/','About','about'),('/services/','Services','services'),('/contact/','Contact','contact'),(BOOK,'Book a Call','calendar')]
-    service_links=[
-        ('customer-support','Customer Support Agent','support'),('lead-generation','Lead Generation','leads'),
-        ('sales-automation','Sales Automation','sales'),('social-agents','WhatsApp Agent','chat'),
-        ('website-assistants','Website AI Assistants','web'),('appointment-booking','Appointment Booking Agent','booking'),
-        ('voice-assistants','Voice AI Assistants','voice'),('multilingual-agents','Multilingual Agents','language'),
-        ('internal-helpdesk','Internal Helpdesk Agent','helpdesk')]
+    main_links=[('/','Home','home'),('/about/','About','about'),('/services/','Solutions','services'),('/contact/','Contact','contact'),(BOOK,'Book a Call','calendar')]
+    # The footer lists every service shown in the services-page directory (same names, same order).
+    service_links=[(slug,name,slug) for name,slug,*_ in SUPPORTING]
     group=lambda pairs: ''.join('<li>'+link(url,icon(symbol)+'<span>'+text+'</span>')+'</li>' for url,text,symbol in pairs)
     social_urls={'Facebook':'https://www.facebook.com/profile.php?id=61595764508818','Instagram':'https://www.instagram.com/chatversio','X':'https://x.com/chatversio'}
     social_colors={'Facebook':'#1877f2','Instagram':'#e4405f','X':'#000000'}
     socials=''.join(f'<a href="{escape(url,quote=True)}" aria-label="{name}" title="{name}" style="--social-brand:{social_colors[name]}" target="_blank" rel="noopener noreferrer">{icon(name)}</a>' for name,url in social_urls.items())
-    footer_logo='<img src="/media/chatversio-footer-logo.png" width="860" height="290" alt="Chatversio AI">'
-    return f'''<footer class="footer" id="footer"><link rel="stylesheet" href="/footer.css?v=7"><div class="footer-glow" aria-hidden="true"></div><div class="wrap">
+    footer_logo='<img src="/media/chatversio-logo-on-dark.png" width="798" height="165" alt="Chatversio AI">'
+    return f'''<footer class="footer" id="footer"><link rel="stylesheet" href="/footer.css?v=9"><div class="footer-glow" aria-hidden="true"></div><div class="wrap">
       <div class="footer-invitation"><span class="footer-phone-wrap" aria-hidden="true"><span class="footer-phone">{icon('phone')}</span></span>
         <h2>Ready to Turn Conversations Into Customers?</h2>
         <p>See how Chatversio AI can automate conversations, capture leads, and help your business grow.</p>
@@ -75,11 +71,11 @@ def footer():
         <p>Turn Conversations Into Conversions. AI-powered Agents that sell, support, and scale your business 24/7.</p>
         <div class="footer-socials" aria-label="Follow Chatversio AI">{socials}</div></div>
         <nav class="footer-nav" aria-labelledby="footer-quick-title"><h2 id="footer-quick-title">Quick Links</h2><ul>{group(main_links)}</ul></nav>
-        <nav class="footer-nav footer-services" aria-labelledby="footer-services-title"><h2 id="footer-services-title">Services</h2><ul>{group([('/services/'+slug+'/',text,symbol) for slug,text,symbol in service_links])}</ul></nav>
+        <nav class="footer-nav footer-services" aria-labelledby="footer-services-title"><h2 id="footer-services-title">Solutions</h2><ul>{group([('/services/'+slug+'/',text,symbol) for slug,text,symbol in service_links])}</ul></nav>
       </div>
       <div class="footer-banner"><p class="footer-signature" aria-hidden="true">Chatversio AI</p></div>
       <div class="footer-bottom"><p>© 2026 Chatversio AI. All rights reserved.</p><p>Built with intelligence. Powered by AI.</p>
-        <div class="footer-legal">{link(SITE+'/privacy-policy','Privacy Policy')}<span aria-hidden="true">·</span>{link(SITE+'/terms','Terms of Service')}</div></div>
+        <div class="footer-legal">{link('/privacy-policy/','Privacy Policy')}<span aria-hidden="true">·</span>{link('/terms/','Terms of Service')}</div></div>
     </div></footer>'''
 
 def page(path, name, description, body, theme='dark'):
@@ -285,33 +281,98 @@ def about_page():
     intro=page_intro('About Chatversio','Behind<br><em>the line.</em>','We design AI agents for the people who answer phones, handle enquiries and keep the follow-up moving.','assembly','grape')
     values=[('Results you can check','Choose a measure with us, such as qualified leads or resolved support requests.'),('A fit for your business','Start with the conversations your customers actually bring to you.'),('A working partnership','Give your team a say in the scripts, integrations and handoffs.'),('An early working version','Review a small, working flow before expanding it across channels.'),('Reliable by design','Agree on access, fallback and review rules for each connection.'),('Decisions from real use','Look at where conversations stall and refine the next version together.')]
     principles='<section class="why"><div class="wrap why-layout"><div>'+eyebrow('Our core values')+'<h2>How we<br><em>work.</em></h2></div><div class="principles">'+''.join(f'<article><h3>{n}</h3><p>{d}</p></article>' for n,d in values)+'</div></div></section>'
-    return intro+f'''<section class="story-note light"><div class="wrap editorial-note"><img class="about-wordmark original-wordmark" src="/media/chatversio-brand-original.jpeg" width="860" height="290" alt="Chatversio AI">{eyebrow('Our story')}<p>A phone rings while your team is already on a call. A buyer has one more question after closing. <em>That’s where our work begins.</em></p></div></section>
+    return intro+f'''<section class="story-note light"><div class="wrap editorial-note"><img class="about-wordmark original-wordmark" src="/media/chatversio-logo-transparent.png" width="798" height="165" alt="Chatversio AI">{eyebrow('Our story')}<p>A phone rings while your team is already on a call. A buyer has one more question after closing. <em>That’s where our work begins.</em></p></div></section>
     <section class="about-pair"><div class="wrap"><article>{eyebrow('Our mission')}<h2>Give every enquiry<br>a useful next step.</h2><p>We build the steps that turn a conversation into an answer, an appointment or a handoff to the right person.</p></article><article>{eyebrow('Our vision')}<h2>Make a business<br>easier to reach.</h2><p>Customers should be able to speak, type or message in a familiar channel and keep their place in the conversation.</p></article></div></section>'''+principles+process()+closing()
 
 def field(label,control,full=False):
     return f'<label class="{"full" if full else ""}"><span>{label}</span>{control}</label>'
 
+FORM_ICONS=json.loads((ROOT/'art/footer-icons.json').read_text())
+def ficon(name,label,control,full=False):
+    """Labelled form control with a leading icon, as on the original contact and schedule forms."""
+    return f'<label class="{"full" if full else ""}"><span>{label}</span><div class="input-wrap">{FORM_ICONS[name] if name else ""}{control}</div></label>'
+
+PRIVACY_NOTE='We use your details only to respond to your request. See our <a href="/privacy-policy/">Privacy Policy</a>.'
+
 def contact_page():
-    options=lambda items: ''.join(f'<option value="{s}">{n}</option>' for n,s,*_ in items)
-    listing='<optgroup label="Our three agents">'+options([x for x in services if x[1] in PRIMARY])+'</optgroup><optgroup label="Supporting services">'+options(SUPPORTING)+'</optgroup>'
-    fields=field('Full name','<input name="name" autocomplete="name" required>')+field('Work email','<input name="email" autocomplete="email" type="email" required>')+field('Company · optional','<input name="business" autocomplete="organization">')+field('Phone · optional','<input name="phone" type="tel" autocomplete="tel">')+field('Website · optional','<input name="website" placeholder="yourcompany.com">')+field('Area of interest','<select name="solution"><option value="">Help me choose</option>'+listing+'</select>')+field('What would you like to automate?','<textarea required name="message" rows="4" placeholder="For example, we miss repair calls when our dispatchers are busy."></textarea>',True)
+    topics=[('voice-agent','AI voice agent / receptionist'),('lead-follow-up','Lead follow-up and CRM automation'),('chatbot-crm','Website chatbot with CRM'),('custom-ai','Custom AI development'),('not-sure','Not sure yet')]
+    select='<select name="topic"><option value="">Select an option (optional)</option>'+''.join(f'<option value="{v}">{t}</option>' for v,t in topics)+'</select>'
+    fields=(ficon('f_user','Full Name *','<input name="name" type="text" placeholder="John Doe" autocomplete="name" required>')
+        +ficon('f_mail','Email Address *','<input name="email" type="email" placeholder="john@company.com" autocomplete="email" required>')
+        +ficon('f_phone','Phone Number','<input name="phone" type="tel" placeholder="+1 234 567 8900" autocomplete="tel">')
+        +ficon('f_building','Business Name','<input name="business" type="text" placeholder="Your Company" autocomplete="organization">')
+        +ficon('f_wand','What do you want to automate?',select)
+        +ficon('f_globe','Website','<input name="companyWebsite" type="text" placeholder="yourcompany.com (optional)" maxlength="200">')
+        +'<label class="full"><span>Message *</span><textarea name="message" rows="5" placeholder="Tell us about your business, goals, and what kind of Agents you need…" required></textarea></label>')
     return f'''<section class="request-page"><div class="wrap request-layout"><div class="request-copy">{eyebrow('Contact')}<h1>What’s<br><em>on your line?</em></h1><p>Tell us where the conversation starts and where you want it to go.</p>
     {cta('#brief-form','Send an enquiry','primary')}<p class="subtle">Prefer a conversation? {link(BOOK,'Book a 30-minute call.')}</p>{img('messenger','','request-art')}</div>
-    <form class="brief-form" id="brief-form" method="post" action="/api/enquiries"><div class="form-head">{eyebrow('Project brief')}<h2>Plan your enquiry.</h2><p>Draft your brief, review the details, then send it to our team.</p></div>
-    <input name="companyWebsite" value="" tabindex="-1" autocomplete="off" hidden><div class="fields">{fields}</div><button class="button black" type="submit">Prepare my brief {arrow()}</button>
-    <div id="brief-review" hidden><h3>Your enquiry brief</h3><textarea aria-label="Prepared project brief" readonly rows="7"></textarea><div class="actions"><button class="button black copy-brief" type="button">Copy brief</button><button class="button black" id="send-enquiry" type="button">Send enquiry {arrow()}</button></div><p class="copy-status" role="status"></p><p class="copy-status" id="enquiry-status" role="status" aria-live="polite"></p></div>
-    </form></div></section>'''+f'''<section class="case-flow light"><div class="wrap">{eyebrow('What happens next')}<h2>From enquiry <em>to plan.</em></h2><div class="case-chain"><article><span>Share</span><p>Bring a question or workflow your team handles regularly.</p></article><article><span>Discuss</span><p>We’ll talk through your goals and the systems involved.</p></article><article><span>Plan</span><p>Agree on a practical first agent and a way to evaluate it.</p></article></div></div></section>'''+questions([('What should I include?','A typical enquiry and the tools your team uses are enough to begin.'),('When should I expect a reply?','The team aims to reply within 24 hours.'),('Can I book directly?','Yes. Open the booking page to choose an available time with the CEO.')])
+    <div class="brief-form" id="contact-card"><div class="form-success" id="contact-success" hidden><div class="success-icon">{FORM_ICONS['f_check']}</div><h3>Message Sent!</h3><p>Thanks for reaching out. Our team will get back to you within 24 hours with a custom Agents strategy for your business.</p><button class="button black" type="button" id="contact-again">Send Another Message</button></div>
+    <form id="brief-form" method="post" action="/api/contact"><div class="form-head"><h2>Send Us a Message</h2><p>Fill in the details below and we'll get back to you shortly.</p></div>
+    <div class="hp-field" aria-hidden="true"><label>Leave this field empty<input type="text" name="hp" tabindex="-1" autocomplete="off"></label></div><div class="fields">{fields}</div>
+    <p class="form-error" role="alert" hidden></p>
+    <button class="button black" type="submit" id="send-enquiry">Send Message {FORM_ICONS['f_send']}</button>
+    <p class="form-note">{PRIVACY_NOTE}</p></form></div></div></section>'''+f'''<section class="case-flow light"><div class="wrap">{eyebrow('What happens next')}<h2>From enquiry <em>to plan.</em></h2><div class="case-chain"><article><span>Share</span><p>Bring a question or workflow your team handles regularly.</p></article><article><span>Discuss</span><p>We’ll talk through your goals and the systems involved.</p></article><article><span>Plan</span><p>Agree on a practical first agent and a way to evaluate it.</p></article></div></div></section>'''+questions([('What should I include?','A typical enquiry and the tools your team uses are enough to begin.'),('When should I expect a reply?','The team aims to reply within 24 hours.'),('Can I book directly?','Yes. Open the booking page to choose an available time with the CEO.')])
 
 def booking_page():
-    fields=field('Full name','<input name="name" autocomplete="name" required>')+field('Email address','<input name="email" type="email" autocomplete="email" required>')+field('Preferred date','<input name="date" type="date" required>')+field('Preferred time · local','<input name="time" type="time" required>')+field('Meeting platform','<select name="platform"><option>Google Meet</option><option>Zoom</option></select>',True)
+    platforms=''.join(f'<button type="button" class="platform-card" data-platform="{v}" aria-pressed="{"true" if v=="google-meet" else "false"}">{mark}<span>{t}</span></button>' for v,t,mark in [('google-meet','Google Meet','<b class="g-mark" aria-hidden="true">G</b>'),('zoom','Zoom',FORM_ICONS['f_video'])])
+    fields=(ficon('f_user','Full Name *','<input name="name" type="text" placeholder="John Doe" autocomplete="name" required>')
+        +ficon('f_mail','Email Address *','<input name="email" type="email" placeholder="john@company.com" autocomplete="email" required>')
+        +ficon('f_calendar','Select Date *','<input name="date" type="date" required>')
+        +ficon('f_clock','Select Time *','<input name="time" type="time" required>')
+        +f'<div class="full platform-group" role="group" aria-label="Preferred Platform"><span>Preferred Platform *</span><div class="platform-grid">{platforms}</div><input type="hidden" name="platform" value="google-meet"></div>')
     return f'''<section class="booking-page"><div class="wrap booking-layout"><div class="booking-copy">{eyebrow('Discovery call')}<h1>Let’s find your<br><em>first workflow.</em></h1>
     <p>Spend 30 minutes with our CEO. Bring one customer enquiry and leave with a clear idea of what to automate first.</p>
-    <a class="button primary" href="#booking-form" data-calendar-link>Request a time {arrow(True)}</a>{link('/contact/','Ask a question first '+arrow(),'text-link')}</div>
+    <a class="button primary" href="#booking-form">Reserve your slot {arrow(True)}</a>{link('/contact/','Ask a question first '+arrow(),'text-link')}</div>
     <div class="booking-pass"><div class="pass-top">{eyebrow('Session details')}<i class="spark"></i></div><div class="duration">30<span>min</span></div><h2>Discovery call</h2><dl><div><dt>With</dt><dd>Chatversio CEO</dd></div><div><dt>Where</dt><dd>Google Meet or Zoom</dd></div><div><dt>Focus</dt><dd>Your first agent workflow</dd></div></dl><div class="ticket-cut" aria-hidden="true"></div><div class="barcode" aria-hidden="true"></div></div></div></section>
-    <section class="booking-plan light"><div class="wrap faq-layout"><div>{eyebrow('Before the call')}<h2>Plan the<br><em>session.</em></h2><p>Share your preferred time below. Our team will confirm availability and send your meeting details.</p></div>
-    <div><details class="booking-preview"><summary>Preview meeting preferences<i class="plus"></i></summary><form id="booking-form" method="post" action="/api/booking-requests"><input name="companyWebsite" value="" tabindex="-1" autocomplete="off" hidden><div class="fields">{fields}</div>
-    <button type="submit" class="button black">Review preferences {arrow()}</button><p class="booking-result" role="status"></p><p class="subtle" id="booking-timezone"></p><button class="button black" id="send-booking" type="button" hidden>Send meeting request {arrow()}</button><p class="copy-status" id="booking-status" role="status" aria-live="polite"></p><a class="text-link" href="#booking-form" data-calendar-link>Request a time {arrow(True)}</a></form></details>
-    <ol class="booking-steps"><li>Choose a preferred date and time.</li><li>Add your details and meeting platform.</li><li>Wait for our team to confirm the time.</li><li>Join the conversation.</li></ol></div></div></section>'''+questions([('How long is the session?','We set aside 30 minutes for the discovery call.'),('Who will I speak with?','The session is directly with Chatversio’s CEO.'),('What should I bring?','One customer enquiry or repetitive task is a useful starting point.'),('What happens after the call?','Together you’ll identify a suitable use case, key dependencies and a realistic next step.')])
+    <section class="booking-plan light"><div class="wrap faq-layout"><div>{eyebrow('Before the call')}<h2>Plan the<br><em>session.</em></h2><p>Pick a time that works for you. We'll send a confirmation with everything you need.</p></div>
+    <div><div class="booking-form-card" id="booking-card"><div class="form-success" id="booking-success" hidden><div class="success-icon">{FORM_ICONS['f_cal_check']}</div><h3>You're Booked!</h3><p>Your meeting has been scheduled. Check your inbox for a calendar invite and all the details you need to join the call.</p><div class="success-actions"><a class="button black" id="booking-mail" href="mailto:">{FORM_ICONS['f_mail']} Check Your Email</a><a class="button primary" href="/">{FORM_ICONS['f_house']} Back to Home</a></div></div>
+    <div class="form-success" id="booking-already" hidden><div class="success-icon warn">{FORM_ICONS['f_cal_x']}</div><h3>Already Scheduled</h3><p>You've already booked a session with us. Check your email for your meeting details and join link.</p></div>
+    <form id="booking-form" method="post" action="/api/schedule"><div class="form-head"><h3>Reserve Your Slot</h3><p>30-minute call. Takes less than 2 minutes to confirm.</p></div><div class="fields">{fields}</div>
+    <p class="form-error" role="alert" hidden></p>
+    <button type="submit" class="button black" id="send-booking">{FORM_ICONS['f_cal_check']} Confirm My Meeting</button>
+    <p class="form-note">{FORM_ICONS['f_shield']} We use your details only to arrange this call. See our <a href="/privacy-policy/">Privacy Policy</a>.</p></form></div>
+    <ol class="booking-steps"><li><strong>Pick a Date &amp; Time.</strong> Choose any available slot that fits your schedule.</li><li><strong>Fill the Form.</strong> Share a few details so we come fully prepared for you.</li><li><strong>Get Confirmation.</strong> A calendar invite and reminder land in your inbox instantly.</li><li><strong>Join the Call.</strong> Meet us on Google Meet or Zoom, your choice.</li></ol></div></div></section>'''+questions([('How long is the session?','We set aside 30 minutes for the discovery call.'),('Who will I speak with?','The session is directly with Chatversio’s CEO.'),('What should I bring?','One customer enquiry or repetitive task is a useful starting point.'),('What happens after the call?','Together you’ll identify a suitable use case, key dependencies and a realistic next step.')])
+
+UPDATED='15 November 2026'
+def legal_page(title, lead, sections):
+    toc=''.join(f'<li><a href="#s{i}">{h}</a></li>' for i,(h,_) in enumerate(sections,1))
+    body=''.join(f'<section id="s{i}"><h2>{h}</h2>{b}</section>' for i,(h,b) in enumerate(sections,1))
+    return f'''<section class="legal-hero ink"><div class="wrap">{eyebrow('Legal')}<h1>{title}</h1><p>{lead}</p><p class="legal-meta">Last updated {UPDATED}</p></div></section>
+    <section class="legal light"><div class="wrap legal-layout"><nav class="legal-toc" aria-label="On this page"><h2>On this page</h2><ol>{toc}</ol></nav><div class="legal-body">{body}</div></div></section>'''
+
+def privacy_page():
+    S=[
+    ('Who we are','<p>Chatversio AI (“Chatversio”, “we”, “us”) designs and builds AI agents for chat, sales follow-up and voice, along with document processing, social messaging channels, lead generation and integrations. This policy explains what personal information we collect through this website and how we use it. If you are a customer’s end user talking to an agent we built for that customer, the customer’s own privacy policy also applies.</p>'),
+    ('Information we collect','<p>We collect only what you choose to send us:</p><ul><li><strong>Enquiry form:</strong> your name, work email, and optionally your company, phone number, website, area of interest and the message you write.</li><li><strong>Discovery call requests:</strong> your name, email, preferred date and time, your time zone and your preferred meeting platform (Google Meet or Zoom).</li><li><strong>Technical data:</strong> like most websites, our servers may process your IP address, browser type and the pages requested so that the site can be delivered securely and kept reliable.</li></ul><p>This site does not use advertising cookies. It stores one small preference in your browser (<code>chatversio-motion</code>) to remember whether you paused animations.</p>'),
+    ('How we use your information','<ul><li>To reply to your enquiry and discuss whether an agent suits your business.</li><li>To confirm, reschedule or follow up on a discovery call. A request is treated as pending until our team confirms it.</li><li>To keep the website secure and prevent spam and abuse.</li><li>To improve our website and the way we explain our services.</li></ul><p>We do not sell your personal information.</p>'),
+    ('Agents, conversations and customer data','<p>When we build and run agents for a business, the conversations, contact details and documents an agent handles are processed on that business’s behalf and under its instructions. During discovery we agree which information an agent may use, where it is stored and when it hands over to a person. Please contact the business you are speaking with about their use of your data.</p>'),
+    ('Sharing and service providers','<p>We share information only with people and providers who help us operate: for example hosting, email and calendar tools, a CRM, and meeting platforms such as Google Meet or Zoom. They may only use it to provide their service to us. We may also disclose information if the law requires it or to protect our rights and users.</p>'),
+    ('Retention','<p>We keep enquiries and meeting requests for as long as needed to respond and to maintain a reasonable record of our discussions, then delete or anonymise them. You can ask us to delete your information sooner.</p>'),
+    ('Security','<p>Enquiries are stored in a private location that is not publicly accessible, and access is limited to people who need it. No online service is completely secure, so please avoid sending passwords, payment card numbers or other highly sensitive information through the website forms.</p>'),
+    ('Your choices and rights','<p>Depending on where you live, you may have the right to access, correct, delete or export your personal information, to object to or restrict certain processing, and to withdraw consent. To make a request, use our <a href="/contact/">contact form</a> and mention “privacy request”. We will respond within a reasonable time and may need to verify your identity first.</p>'),
+    ('Children','<p>Our website and services are intended for businesses and are not directed at children. We do not knowingly collect information from children.</p>'),
+    ('Changes to this policy','<p>We may update this policy as the website or our services change. The date at the top shows when it was last revised.</p>'),
+    ('Contact us','<p>Questions about this policy? Reach us through the <a href="/contact/">contact page</a>.</p>'),
+    ]
+    return legal_page('Privacy <em>Policy.</em>','How Chatversio AI collects, uses and protects the information you share with us.',S)
+
+def terms_page():
+    S=[
+    ('Acceptance of these terms','<p>By using the Chatversio AI website you agree to these Terms of Service. If you do not agree, please do not use the site. Work we carry out for a customer is governed by a separate written agreement, which takes priority over these terms where they differ.</p>'),
+    ('What this website provides','<p>This website describes Chatversio’s AI agent services (including Chat, Sales and Voice Agents, document processing, social channel agents, lead generation, integrations and custom platforms) and lets you contact us or request a discovery call. Descriptions and demonstrations are for information and illustrate what is possible; they are not an offer or a guarantee of specific results.</p>'),
+    ('Enquiries and discovery calls','<p>Sending an enquiry or call request does not create a contract. A requested call time is <strong>pending</strong> until our team confirms it, and we may propose a different time. Proposals and pricing are provided separately and are only binding once agreed in writing.</p>'),
+    ('Acceptable use','<p>You agree not to:</p><ul><li>use the site unlawfully or to send spam, malware or misleading information;</li><li>attempt to gain unauthorised access to the site, our servers or other users’ data;</li><li>interfere with the site’s operation, or use automated tools to overload it;</li><li>copy, scrape or resell site content other than as these terms or the law allow.</li></ul>'),
+    ('Information you send us','<p>You are responsible for the accuracy of what you submit and for having the right to share it. Please do not submit passwords, payment card details or highly sensitive personal information. We handle submitted details as described in our <a href="/privacy-policy/">Privacy Policy</a>.</p>'),
+    ('AI-generated content','<p>AI agents generate responses automatically and can make mistakes. Examples and demo conversations on this site are illustrative. Anything an agent says should be checked before it is relied on for legal, financial, medical or other important decisions.</p>'),
+    ('Intellectual property','<p>The Chatversio name, logo, design, text, illustrations, 3D models, audio and software on this site belong to Chatversio AI or its licensors and are protected by intellectual property laws. Third-party components remain under their own licences. You may view the site and share links to it, but may not reproduce or use our materials commercially without permission.</p>'),
+    ('Third-party services and links','<p>The site may link to or rely on third-party services such as social networks, meeting platforms and calendar tools. We do not control them and are not responsible for their content or practices.</p>'),
+    ('Disclaimers','<p>The website is provided “as is” and “as available”. To the fullest extent permitted by law, we disclaim all warranties, express or implied, including fitness for a particular purpose and uninterrupted or error-free operation.</p>'),
+    ('Limitation of liability','<p>To the fullest extent permitted by law, Chatversio AI is not liable for indirect, incidental, special or consequential damages, or for lost profits or data, arising from your use of the website. Nothing in these terms limits liability that cannot be limited by law.</p>'),
+    ('Changes and termination','<p>We may change these terms or the website at any time; continued use after a change means you accept the updated terms. We may suspend access to the site for anyone who breaches these terms.</p>'),
+    ('Governing law','<p>These terms are governed by the laws that apply where Chatversio AI is established, and disputes will be handled by the courts of that jurisdiction, unless mandatory consumer law says otherwise.</p>'),
+    ('Contact us','<p>Questions about these terms? Reach us through the <a href="/contact/">contact page</a>.</p>'),
+    ]
+    return legal_page('Terms of <em>Service.</em>','The rules for using the Chatversio AI website and requesting our services.',S)
 
 def build():
     (OUT/'media').mkdir(exist_ok=True,parents=True)
@@ -321,6 +382,8 @@ def build():
         page('/services/'+s[1]+'/',s[0],s[2],service_page(i,s))
     page('/about/','About the studio','Meet the thinking behind Chatversio’s conversation systems.',about_page())
     page('/contact/','Tell us about your project','Discuss your customer enquiries and automation needs.',contact_page())
+    page('/privacy-policy/','Privacy Policy','How Chatversio AI collects, uses and protects the information you share with us.',privacy_page())
+    page('/terms/','Terms of Service','The terms for using the Chatversio AI website and requesting our services.',terms_page())
     page(BOOK,'Book a discovery call','Choose a live time for a 30-minute discovery call with Chatversio.',booking_page())
 if __name__=='__main__':
     build()

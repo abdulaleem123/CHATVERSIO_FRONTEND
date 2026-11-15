@@ -16,8 +16,8 @@ All generated sections live in `components/`. The generator's shared helpers pro
 | Integration illustration | `integrations()` / `#integration-data` | Twelve selectable tools; animated cable and input/output labels |
 | Delivery process | `process()` / `.process-book` | Six accessible details accordions, one open at a time |
 | FAQ | `questions()` / native `details` | Mouse, touch and keyboard disclosure |
-| Contact form | `contact_page()` / `#brief-form` | Query prefill, validation, brief preview, copy and actual API submission |
-| Booking form | `booking_page()` / `#booking-form` | Future date/time, timezone label, preference review, request submission or provider link |
+| Contact form | `contact_page()` / `#brief-form` | Same fields as the original contact form; direct submit to `/api/contact` |
+| Booking form | `booking_page()` / `#booking-form` | Same fields as the original schedule form (date, time, Google Meet/Zoom); direct submit to `/api/schedule` |
 | Footer | `footer()` / `#footer` | Original transparent logo, links/socials, animated gradient wordmark and responsive columns |
 | Service detail pages | `service_page()` / 18 slugs | Shared template populated by `services` and `PROFILES` |
 

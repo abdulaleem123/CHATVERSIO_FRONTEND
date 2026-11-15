@@ -7,8 +7,8 @@ import { randomUUID } from 'node:crypto';
 import { createApp } from '../server/index.mjs';
 import { validate } from '../server/validation.mjs';
 
-const enquiry = { name: 'Integration QA', email: 'qa@example.com', message: 'Synthetic integration test. No real customer.', website: 'example.com', timezone: 'Asia/Karachi' };
-const booking = { name: 'Integration QA', email: 'qa@example.com', date: '2030-02-02', time: '14:00', platform: 'Google Meet', timezone: 'Asia/Karachi' };
+const enquiry = { name: 'Integration QA', email: 'qa@example.com', message: 'Synthetic integration test. No real customer.', companyWebsite: 'example.com', topic: 'not-sure', timezone: 'Asia/Karachi' };
+const booking = { name: 'Integration QA', email: 'qa@example.com', date: '2030-02-02', time: '14:00', platform: 'google-meet', timezone: 'Asia/Karachi' };
 async function setup(t, extra={}) {
   const dir = await mkdtemp(join(tmpdir(), 'chatversio-test-'));
   const publicDir = join(dir,'public'); await mkdir(publicDir);
@@ -36,7 +36,7 @@ test('enquiries are persisted before success; retries and concurrent requests ar
 test('invalid email, honeypot, huge body, wrong method and hostile origin do not produce successful submissions',async t=>{
   const {post,base}=await setup(t);
   assert.equal((await post({...enquiry,email:'bad'})).status,422);
-  assert.equal((await post({...enquiry,companyWebsite:'bot-filled'})).status,422);
+  assert.equal((await post({...enquiry,hp:'bot-filled'})).status,422);
   assert.equal((await post({...enquiry,message:'x'.repeat(22000)})).status,413);
   assert.equal((await post(enquiry,randomUUID(),'/api/enquiries',{Origin:'https://unrelated.example'})).status,403);
   assert.equal((await fetch(base+'/api/enquiries')).status,405);

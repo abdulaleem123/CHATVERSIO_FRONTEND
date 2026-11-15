@@ -465,43 +465,24 @@
 
   const form=one('#brief-form');
   if(form){
+    // Service pages link here with ?solution=<slug>; map it onto the form's "What do you want to automate?" options.
     const query=new URLSearchParams(location.search);
-    const s=query.get('solution'),selector=form.elements.solution;
-    if(Array.from(selector.options).some(o=>o.value===s))selector.value=s;
+    const topics={'voice-assistants':'voice-agent','sales-automation':'lead-follow-up','lead-generation':'lead-follow-up','website-assistants':'chatbot-crm','custom-platforms':'custom-ai'};
+    const topic=topics[query.get('solution')],selector=form.elements.topic;
+    if(topic&&Array.from(selector.options).some(o=>o.value===topic))selector.value=topic;
     const industryLabels={service:'home services',property:'real estate',business:'B2B sales',clinic:'clinics'};
     const selectedIndustry=industryLabels[query.get('industry')];
     if(selectedIndustry)form.elements.message.value='I’d like to discuss an enquiry workflow for '+selectedIndustry+'. ';
-    const review=one('#brief-review'),output=one('textarea',review),status=one('.copy-status',review);
-    form.addEventListener('submit',e=>{
-      e.preventDefault();
-      const data=new FormData(form);
-      const fields=[['Contact',data.get('name')],['Email',data.get('email')],['Company',data.get('business')],['Phone',data.get('phone')],['Website',data.get('website')],['Area of interest',selector.selectedOptions[0].text],['Project',data.get('message')]];
-      output.value=fields.filter(([,v])=>String(v??'').trim()).map(([k,v])=>k+' — '+String(v).trim()).join('\n');
-      status.textContent='';review.hidden=false;output.focus();output.setSelectionRange(0,0);
-    });
-    form.addEventListener('input',e=>{if(!review.contains(e.target))review.hidden=true;});
-    one('.copy-brief',review).addEventListener('click',async()=>{
-      try{
-        await navigator.clipboard.writeText(output.value);
-        status.textContent='Brief copied.';
-      }catch{
-        output.select();
-        const copied=document.execCommand('copy');
-        status.textContent=copied?'Brief copied.':'Your brief is selected. Use your device’s copy command.';
-      }
-    });
   }
   const booking=one('#booking-form');
   if(booking){
     const now=new Date();
     booking.elements.date.min=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
-    const result=one('.booking-result',booking);
-    booking.addEventListener('input',()=>result.textContent='');
-    booking.addEventListener('submit',event=>{
-      event.preventDefault();
-      const data=new FormData(booking);
-      result.textContent='Preferred session for '+data.get('name')+' · '+data.get('date')+' at '+data.get('time')+' in your local time, via '+data.get('platform')+'. Review your details, then send the meeting request below.';
-    });
+    const cards=all('.platform-card',booking);
+    cards.forEach(card=>card.addEventListener('click',()=>{
+      booking.elements.platform.value=card.dataset.platform;
+      cards.forEach(other=>other.setAttribute('aria-pressed',String(other===card)));
+    }));
   }
   if(one('#sound-field'))setupWavefield(one('#sound-field'));
   if(one('.cast-stage'))setupCast(one('.cast-stage'));

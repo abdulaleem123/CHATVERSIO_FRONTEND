@@ -14,7 +14,7 @@ async function walk(folder) {
 }
 const files = await walk(dist);
 const pages = files.filter(file => file.endsWith('/index.html'));
-assert.equal(pages.length, 23, 'Expected all 23 approved pages');
+assert.equal(pages.length, 25, 'Expected all 25 pages');
 let assetReferences = 0;
 for (const file of pages) {
   const html = await readFile(file, 'utf8');

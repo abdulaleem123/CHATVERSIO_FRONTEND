@@ -1,111 +1,91 @@
-/* Connect the approved UI to your server; visual interactions stay in studio.js. */
+/* Contact and schedule forms: submit exactly the fields the original website sent, as JSON.
+   Visual interactions stay in studio.js. */
 (() => {
   'use strict';
   const config = window.CHATVERSIO_CONFIG || {};
   const one = selector => document.querySelector(selector);
-  const states = new WeakMap();
-  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+  const SUPPORT = 'saif@chatversio-ai.com';
 
-  function stateFor(form) {
-    if (!states.has(form)) states.set(form, { key: crypto.randomUUID(), pending: false, sent: false });
-    return states.get(form);
-  }
-  function payload(form) {
-    const values = Object.fromEntries(new FormData(form));
-    // The generated review textarea has no name and is not sent twice.
-    values.timezone = timeZone;
-    return values;
-  }
-  async function send(form, button, status, endpoint, kind) {
-    if (!form.reportValidity()) return;
-    const state = stateFor(form);
-    if (state.pending || state.sent) return;
-    const values = payload(form);
-    const fields = Array.from(form.querySelectorAll('input, select, textarea'));
-    const disabled = fields.map(field => field.disabled);
-    fields.forEach(field => { field.disabled = true; });
-    state.pending = true;
-    button.disabled = true;
-    form.setAttribute('aria-busy', 'true');
-    status.textContent = 'Sending…';
+  async function post(endpoint, values, key) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), config.requestTimeoutMs || 15000);
     try {
-      const target = new URL(endpoint, location.origin);
-      if (!['http:', 'https:'].includes(target.protocol)) throw new Error('Invalid form endpoint.');
-      const response = await fetch(target, {
+      const response = await fetch(new URL(endpoint, location.origin), {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Idempotency-Key': state.key },
+        headers: { 'Content-Type': 'application/json', 'X-Idempotency-Key': key },
         credentials: 'same-origin',
         body: JSON.stringify(values),
         signal: controller.signal,
       });
-      const result = await response.json().catch(() => null);
-      if (!response.ok || !result?.ok || !result.id) {
-        throw new Error(result?.error || 'Your request was not accepted. Please try again.');
-      }
-      state.sent = true;
-      status.textContent = kind === 'booking'
-        ? `Request received. Your meeting is not booked yet; our team will confirm the time. Reference: ${result.id}`
-        : `Enquiry received. Our team will review your brief. Reference: ${result.id}`;
-      // Analytics may subscribe to this event; no personal form values are exposed.
-      document.dispatchEvent(new CustomEvent('chatversio:submitted', { detail: { kind, id: result.id } }));
-    } catch (error) {
-      status.textContent = error.name === 'AbortError'
-        ? 'The request timed out. Please retry; the same request will not be saved twice.'
-        : error.message === 'Failed to fetch'
-          ? 'We could not reach the server. Please check your connection and try again.'
-          : error.message;
-    } finally {
-      clearTimeout(timeout);
-      fields.forEach((field, index) => { field.disabled = disabled[index]; });
-      state.pending = false;
-      button.disabled = state.sent;
-      form.removeAttribute('aria-busy');
-    }
+      const result = await response.json().catch(() => ({}));
+      return { ok: response.ok, status: response.status, result };
+    } finally { clearTimeout(timeout); }
   }
-  function resetOnEdit(form, button, status) {
-    form.addEventListener('input', event => {
-      if (event.target.readOnly) return;
-      const current = stateFor(form);
-      if (current.pending) return;
-      states.set(form, { key: crypto.randomUUID(), pending: false, sent: false });
-      button.disabled = false;
-      status.textContent = '';
+  function wire(form, { endpoint, idle, busy, failure, network, done }) {
+    const button = form.querySelector('button[type=submit]');
+    const error = form.querySelector('.form-error');
+    const idleHTML = button.innerHTML;
+    // A retry of the same submission reuses one key, so a lost response cannot create a duplicate.
+    let key = crypto.randomUUID();
+    form.addEventListener('input', () => { key = crypto.randomUUID(); });
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      error.hidden = true; error.textContent = '';
+      button.disabled = true;
+      button.innerHTML = '<span class="spinner" aria-hidden="true"></span>' + busy;
+      const values = Object.fromEntries(new FormData(form));
+      try {
+        const { ok, status, result } = await post(endpoint, values, key);
+        if (ok) { done(values); return; }
+        error.textContent = result.error || failure(status);
+        error.hidden = false;
+      } catch {
+        error.textContent = network;
+        error.hidden = false;
+      } finally {
+        button.disabled = false;
+        button.innerHTML = idleHTML;
+      }
     });
   }
-  const brief = one('#brief-form');
-  if (brief) {
-    const button = one('#send-enquiry');
-    const status = one('#enquiry-status');
-    button.addEventListener('click', () => send(brief, button, status, config.enquiryEndpoint || '/api/enquiries', 'enquiry'));
-    resetOnEdit(brief, button, status);
+
+  const contact = one('#brief-form');
+  if (contact) {
+    const success = one('#contact-success');
+    wire(contact, {
+      endpoint: config.contactEndpoint || '/api/contact',
+      busy: 'Sending…',
+      failure: () => `Your message was not sent. Please try again, or email us at ${SUPPORT}.`,
+      network: 'Network problem - your message was not sent. Please check your connection and try again.',
+      done: () => {
+        contact.hidden = true; success.hidden = false;
+        document.dispatchEvent(new CustomEvent('chatversio:submitted', { detail: { kind: 'contact' } }));
+      },
+    });
+    one('#contact-again').addEventListener('click', () => {
+      contact.reset(); success.hidden = true; contact.hidden = false;
+    });
   }
+
   const booking = one('#booking-form');
   if (booking) {
-    const button = one('#send-booking');
-    const status = one('#booking-status');
-    const preview = one('.booking-preview');
-    const provider = config.calendarUrl?.trim();
-    let providerURL;
-    try {
-      if (provider) {
-        providerURL = new URL(provider, location.origin);
-        if (!['http:', 'https:'].includes(providerURL.protocol)) providerURL = null;
-        // Prevent looping back to this page when replacing the original website.
-        if (providerURL?.origin === location.origin && providerURL.pathname.replace(/\/$/, '') === location.pathname.replace(/\/$/, '')) providerURL = null;
-      }
-    } catch { /* Use the request form if the provider address is invalid. */ }
-    document.querySelectorAll('[data-calendar-link]').forEach(link => {
-      link.href = providerURL ? providerURL.href : '#booking-form';
-      link.firstChild.textContent = providerURL ? 'Choose a live time ' : 'Request a time ';
-      if (!providerURL) link.addEventListener('click', () => { preview.open = true; });
+    const success = one('#booking-success');
+    const already = one('#booking-already');
+    const showAlready = () => { booking.hidden = true; already.hidden = false; };
+    try { if (localStorage.getItem('has_scheduled')) showAlready(); } catch { /* Storage is optional. */ }
+    wire(booking, {
+      endpoint: config.scheduleEndpoint || '/api/schedule',
+      busy: 'Scheduling…',
+      failure: status => status === 409
+        ? 'That time slot is already taken. Please choose a different time.'
+        : `We could not complete your booking. Please try again, or email ${SUPPORT} and we will arrange a time.`,
+      network: 'Network problem - your booking was not made. Please check your connection and try again.',
+      done: values => {
+        try { localStorage.setItem('has_scheduled', 'true'); } catch { /* Booking still succeeded. */ }
+        one('#booking-mail').href = 'mailto:' + values.email;
+        booking.hidden = true; success.hidden = false;
+        document.dispatchEvent(new CustomEvent('chatversio:submitted', { detail: { kind: 'schedule', platform: values.platform } }));
+      },
     });
-    booking.addEventListener('submit', () => { button.hidden = false; });
-    button.addEventListener('click', () => send(booking, button, status, config.bookingEndpoint || '/api/booking-requests', 'booking'));
-    resetOnEdit(booking, button, status);
-    const timezoneLabel = one('#booking-timezone');
-    timezoneLabel.textContent = `Times are in ${timeZone}. Requests are confirmed by our team.`;
-    if (location.hash === '#booking-form') preview.open = true;
   }
 })();

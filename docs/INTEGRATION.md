@@ -2,7 +2,7 @@
 
 ## Preserve the approved appearance
 
-Use the provided CSS, fonts, media paths, class names and DOM structure together. The header logo uses `chatversio-brand-original.jpeg`; the footer uses the transparent `chatversio-footer-logo.png`. Do not approximate either with text or an icon. The footer and its stylesheet are unchanged from approved v7.
+Use the provided CSS, fonts, media paths, class names and DOM structure together. The header and footer use the transparent `chatversio-logo-on-dark.png` (light wordmark for the navy background); the About page uses `chatversio-logo-transparent.png`. The old `chatversio-brand-original.jpeg` and `chatversio-footer-logo.png`. Do not approximate either with text or an icon. The footer and its stylesheet are unchanged from approved v7.
 
 The page generator writes all HTML under `dist/`; it does not wipe media or CSS. Edit content in `content.py`, templates in `build.py`, interface behavior in `dist/studio.js`, submission behavior in `dist/integration.js`, and the live hero in `scene/hero.js`.
 
@@ -12,8 +12,8 @@ The page generator writes all HTML under `dist/`; it does not wipe media or CSS.
 2. Copy **the contents of `dist/`**, including `fonts/`, `media/`, nested service folders and all JS/CSS files, into your frontend's web root or framework `public/` directory. Do not put the source folder, server secrets or request data in a public directory.
 3. Route the 23 page URLs to their corresponding `index.html`. Serve real 404s for missing routes. Keep existing backend endpoints, existing privacy policy and terms routes, and any account/dashboard routes.
 4. Load `/site-config.js`, `/studio.js` and `/integration.js` once, in that order, using `defer`. The homepage also loads `/hero-3d.js` as a module. Retain the page's inline JSON scenario data and footer CSS link.
-5. Implement `POST /api/enquiries` and `POST /api/booking-requests` to the documented contract, or change the two endpoint URLs in `site-config.js`. Same-origin routes are simplest. Cross-origin APIs must explicitly allow your frontend origin, the JSON content type and `X-Idempotency-Key` header; this reference server intentionally does not enable cross-origin access.
-6. Set `calendarUrl` to an actual provider calendar URL if you want immediate reservation. Do not point it back at `/schedule-event/` on the same site. An empty value uses the working meeting-request form.
+5. Your existing `POST /api/contact` and `POST /api/schedule` routes work as they are (same payloads as the original site; see `docs/API.md`), or change the two endpoint URLs in `site-config.js`. Same-origin routes are simplest.
+6. Nothing else to configure for booking: the schedule form posts to your backend, which creates the meeting as before.
 7. Set production metadata in `build.py` if your domain differs. Its Open Graph image now points to `https://www.chatversio-ai.com/media/home-preview.jpg`.
 8. Run `npm run check`, your own backend tests, and the staging checks in `QA.md`, then deploy through your normal process.
 

@@ -60,7 +60,7 @@ export function createApp(options = {}) {
     try {
       const url = new URL(req.url, 'http://localhost');
       if (url.pathname.startsWith('/api/')) {
-        const kind = { '/api/enquiries': 'enquiry', '/api/booking-requests': 'booking' }[url.pathname];
+        const kind = { '/api/contact': 'enquiry', '/api/schedule': 'booking', '/api/enquiries': 'enquiry', '/api/booking-requests': 'booking' }[url.pathname];
         if (!kind) throw new RequestError('Not found.', 404);
         if (req.method !== 'POST') { res.setHeader('Allow', 'POST'); throw new RequestError('Use POST.', 405); }
         const origin = req.headers.origin;
