@@ -5,7 +5,3 @@ __pycache__/
 *.pyc
 .openai/
 *.zip
-.vercel
-
-.vercel
-.vercelignore

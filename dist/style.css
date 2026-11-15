@@ -473,11 +473,6 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,s
 .about-wordmark.original-wordmark{aspect-ratio:798/165;object-fit:contain;background:transparent;border-radius:0}
 .footer{background:radial-gradient(ellipse at 48% 30%,#e3f4fc 0,transparent 57%),#f7f9fe;color:#14284b;padding:72px 0 22px;border-top:1px solid #d8e5f5}
 .footer :focus-visible{outline-color:#2468ec}
-.footer-invitation{text-align:center;max-width:680px;margin:0 auto 56px;padding-bottom:49px;border-bottom:1px solid #d8e5ef}
-.footer-invitation h2{font:700 clamp(28px,3vw,43px)/1.18 var(--display);letter-spacing:-.045em;color:#102548}
-.footer-invitation p{max-width:550px;margin:19px auto 26px;color:#52647d;font-size:15px;line-height:1.7}
-.footer .footer-cta{border:1px solid #2468ec;background:#fff7;color:#1b55bf;border-radius:8px;padding:14px 22px;min-height:50px;font-weight:650;box-shadow:0 4px 14px #315fa009}
-.footer .footer-cta:hover{background:#2468ec;color:white;text-decoration:none}
 .footer-grid{display:grid;grid-template-columns:minmax(210px,1.05fr) minmax(130px,.65fr) minmax(0,2.15fr);gap:clamp(28px,4.3vw,75px);max-width:1230px;margin-inline:auto}
 .footer-brand .brand .wordmark{width:235px;max-width:100%}
 .footer-brand p{max-width:275px;margin:21px 0 22px;font-size:14px;line-height:1.75;color:#52647d}
@@ -499,7 +494,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,s
 .footer-utility .motion{color:#60718a;font-size:9px}
 .footer-utility>a{display:inline-flex;align-items:center;gap:7px;font-size:10px}
 @media(max-width:960px){.footer-grid{grid-template-columns:1fr 1fr;gap:38px}.footer-services{grid-column:1/-1}.footer-services ul{grid-template-columns:1fr 1fr 1fr}.footer-bottom{flex-wrap:wrap;gap:13px 24px}.footer-bottom>p:nth-child(2){order:3;width:100%}.footer-signature{margin-top:48px}}
-@media(max-width:720px){.brand .wordmark.original-wordmark{width:clamp(150px,40vw,180px);height:auto}.footer{padding-top:44px}.footer-invitation{margin-bottom:35px;padding-bottom:34px}.footer-invitation h2{font-size:29px}.footer-invitation p{font-size:14px;margin:17px auto 22px}.footer-grid{grid-template-columns:minmax(0,1.15fr) minmax(100px,.85fr);gap:30px 25px}.footer-brand .brand .wordmark{width:200px}.footer-brand p{font-size:12px;margin:15px 0 18px}.footer-nav h2{font-size:14px;margin-top:3px;margin-bottom:17px}.footer-nav ul{gap:13px}.footer-nav a{font-size:12px;gap:8px}.footer-services ul{grid-template-columns:1fr 1fr;column-gap:20px}.footer-nav a svg{width:16px;height:16px;flex-basis:16px;margin-top:2px}.footer-signature{font-size:10.1vw;margin:38px 0 21px;letter-spacing:-.065em}.footer-bottom{font-size:10px;padding-top:20px;gap:10px}.footer-utility{margin-top:18px}}
+@media(max-width:720px){.brand .wordmark.original-wordmark{width:clamp(150px,40vw,180px);height:auto}.footer{padding-top:44px}.footer-grid{grid-template-columns:minmax(0,1.15fr) minmax(100px,.85fr);gap:30px 25px}.footer-brand .brand .wordmark{width:200px}.footer-brand p{font-size:12px;margin:15px 0 18px}.footer-nav h2{font-size:14px;margin-top:3px;margin-bottom:17px}.footer-nav ul{gap:13px}.footer-nav a{font-size:12px;gap:8px}.footer-services ul{grid-template-columns:1fr 1fr;column-gap:20px}.footer-nav a svg{width:16px;height:16px;flex-basis:16px;margin-top:2px}.footer-signature{font-size:10.1vw;margin:38px 0 21px;letter-spacing:-.065em}.footer-bottom{font-size:10px;padding-top:20px;gap:10px}.footer-utility{margin-top:18px}}
 @media(max-width:365px){.brand .wordmark.original-wordmark{width:140px}.footer-grid{gap:28px 17px}.footer-nav a{font-size:11px}.footer-socials{gap:7px}.footer-socials a{width:32px;height:32px}.footer-services ul{column-gap:14px}}
 
 /* Legal pages: privacy policy and terms of service. */

@@ -62,11 +62,7 @@ def footer():
     social_colors={'Facebook':'#1877f2','Instagram':'#e4405f','X':'#000000'}
     socials=''.join(f'<a href="{escape(url,quote=True)}" aria-label="{name}" title="{name}" style="--social-brand:{social_colors[name]}" target="_blank" rel="noopener noreferrer">{icon(name)}</a>' for name,url in social_urls.items())
     footer_logo='<img src="/media/chatversio-logo-on-dark.png" width="798" height="165" alt="Chatversio AI">'
-    return f'''<footer class="footer" id="footer"><link rel="stylesheet" href="/footer.css?v=9"><div class="footer-glow" aria-hidden="true"></div><div class="wrap">
-      <div class="footer-invitation"><span class="footer-phone-wrap" aria-hidden="true"><span class="footer-phone">{icon('phone')}</span></span>
-        <h2>Ready to Turn Conversations Into Customers?</h2>
-        <p>See how Chatversio AI can automate conversations, capture leads, and help your business grow.</p>
-        {link(BOOK,'Schedule a Call'+icon('arrow'),'footer-cta')}</div>
+    return f'''<footer class="footer" id="footer"><link rel="stylesheet" href="/footer.css?v=10"><div class="footer-glow" aria-hidden="true"></div><div class="wrap">
       <div class="footer-grid"><div class="footer-brand">{link('/',footer_logo,'footer-logo')}
         <p>Turn Conversations Into Conversions. AI-powered Agents that sell, support, and scale your business 24/7.</p>
         <div class="footer-socials" aria-label="Follow Chatversio AI">{socials}</div></div>
