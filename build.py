@@ -58,11 +58,11 @@ def footer():
     # The footer lists every service shown in the services-page directory (same names, same order).
     service_links=[(slug,name,slug) for name,slug,*_ in SUPPORTING]
     group=lambda pairs: ''.join('<li>'+link(url,icon(symbol)+'<span>'+text+'</span>')+'</li>' for url,text,symbol in pairs)
-    social_urls={'Facebook':'https://www.facebook.com/profile.php?id=61595764508818','Instagram':'https://www.instagram.com/chatversio','X':'https://x.com/chatversio'}
-    social_colors={'Facebook':'#1877f2','Instagram':'#e4405f','X':'#000000'}
+    social_urls={'Facebook':'https://www.facebook.com/profile.php?id=61595764508818','Instagram':'https://www.instagram.com/chatversio','X':'https://x.com/chatversio','LinkedIn':'https://www.linkedin.com/company/chatversio-ai/'}
+    social_colors={'Facebook':'#1877f2','Instagram':'#e4405f','X':'#000000','LinkedIn':'#0a66c2'}
     socials=''.join(f'<a href="{escape(url,quote=True)}" aria-label="{name}" title="{name}" style="--social-brand:{social_colors[name]}" target="_blank" rel="noopener noreferrer">{icon(name)}</a>' for name,url in social_urls.items())
     footer_logo='<img src="/media/chatversio-logo-on-dark.png" width="798" height="165" alt="Chatversio AI">'
-    return f'''<footer class="footer" id="footer"><link rel="stylesheet" href="/footer.css?v=10"><div class="footer-glow" aria-hidden="true"></div><div class="wrap">
+    return f'''<footer class="footer" id="footer"><link rel="stylesheet" href="/footer.css?v=18"><div class="footer-glow" aria-hidden="true"></div><div class="wrap">
       <div class="footer-grid"><div class="footer-brand">{link('/',footer_logo,'footer-logo')}
         <p>Turn Conversations Into Conversions. AI-powered Agents that sell, support, and scale your business 24/7.</p>
         <div class="footer-socials" aria-label="Follow Chatversio AI">{socials}</div></div>
@@ -83,7 +83,7 @@ def page(path, name, description, body, theme='dark'):
     <title>{escape(name)} · Chatversio AI</title>
     <meta property="og:title" content="{escape(name,quote=True)} · Chatversio AI"><meta property="og:description" content="{escape(description,quote=True)}">
     <meta property="og:image" content="https://www.chatversio-ai.com/media/home-preview.jpg">
-    <link rel="icon" href="/media/favicon.png" type="image/png"><link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" type="image/png" href="/media/favicon-48.png" sizes="48x48"><link rel="icon" type="image/png" href="/media/favicon-96.png" sizes="96x96"><link rel="icon" type="image/png" href="/media/favicon-192.png" sizes="192x192"><link rel="icon" type="image/png" href="/media/favicon-32.png" sizes="32x32"><link rel="apple-touch-icon" href="/media/apple-touch-icon.png"><link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/jakarta-700.woff" as="font" type="font/woff" crossorigin>
     <link rel="stylesheet" href="/style.css"><script src="/site-config.js" defer></script><script src="/studio.js" defer></script><script src="/integration.js" defer></script></head>
     <body class="theme-{theme}"><a class="skip" href="#main">Skip to content</a>{nav(path)}

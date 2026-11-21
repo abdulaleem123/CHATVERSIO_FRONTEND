@@ -469,7 +469,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,s
 .hero h1,.hero h1 em{letter-spacing:-.06em}
 .hero-person{object-position:center}
 /* Supplied brand artwork and the original website's footer. */
-.brand .wordmark.original-wordmark{width:clamp(170px,14vw,212px);height:auto;aspect-ratio:798/165;object-fit:contain;background:transparent;border-radius:0}
+.brand .wordmark.original-wordmark{width:clamp(176px,14vw,214px);height:auto;aspect-ratio:798/165;object-fit:contain;background:transparent;border-radius:0}
 .about-wordmark.original-wordmark{aspect-ratio:798/165;object-fit:contain;background:transparent;border-radius:0}
 .footer{background:radial-gradient(ellipse at 48% 30%,#e3f4fc 0,transparent 57%),#f7f9fe;color:#14284b;padding:72px 0 22px;border-top:1px solid #d8e5f5}
 .footer :focus-visible{outline-color:#2468ec}
