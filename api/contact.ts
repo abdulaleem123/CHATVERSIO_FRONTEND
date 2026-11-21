@@ -3,12 +3,17 @@
 import nodemailer from 'nodemailer'
 const SITE_URL = 'https://chatversio-ai.com'
 
+// Accept the Vercel names already in use (EMAIL_USER / EMAIL_PASS) or the Gmail-style names.
+const MAIL_USER = process.env.EMAIL_USER || process.env.GMAIL_USER
+const MAIL_PASS = process.env.EMAIL_PASS || process.env.GMAIL_APP_PASSWORD
+
+
 function getTransporter() {
   return nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_APP_PASSWORD,
+      user: MAIL_USER,
+      pass: MAIL_PASS,
     },
   })
 }
@@ -16,7 +21,7 @@ function getTransporter() {
 // Every notification goes to NOTIFY_EMAIL (comma-separated list allowed, or GMAIL_USER) plus Esha.
 const EXTRA_NOTIFY = 'esha@chatversio-ai.com'
 function notifyRecipients(): string {
-  const base = (process.env.NOTIFY_EMAIL || process.env.GMAIL_USER || '').split(',').map(v => v.trim()).filter(Boolean)
+  const base = (process.env.NOTIFY_EMAIL || MAIL_USER || '').split(',').map(v => v.trim()).filter(Boolean)
   const all = [...base, EXTRA_NOTIFY]
   return [...new Set(all.map(v => v.toLowerCase()))].join(', ')
 }
@@ -90,7 +95,7 @@ export async function POST(req: Request) {
 
     // ── Email to YOU (notification) ───────────────────────────
     await transporter.sendMail({
-      from: `"Chatversio AI Contact" <${process.env.GMAIL_USER}>`,
+      from: `"Chatversio AI Contact" <${MAIL_USER}>`,
       to: notifyRecipients(),
       replyTo: email,
       subject: `📩 New Contact Form Submission - ${name.replace(/[\r\n]+/g, ' ')}`,
@@ -149,7 +154,7 @@ export async function POST(req: Request) {
     // visitor an error (they would resubmit and create duplicates).
     try {
     await transporter.sendMail({
-      from: `"Chatversio AI" <${process.env.GMAIL_USER}>`,
+      from: `"Chatversio AI" <${MAIL_USER}>`,
       to: email,
       subject: `We received your message, ${name.split(' ')[0].replace(/[\r\n]+/g, ' ')}!`,
       html: `

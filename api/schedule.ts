@@ -3,12 +3,17 @@ import { google } from 'googleapis'
 import axios from 'axios'
 import { MEETING_DURATION_MINUTES, MEETING_DURATION_MS } from './_booking'
 
+
+// Accept the Vercel names already in use (EMAIL_USER / EMAIL_PASS) or the Gmail-style names.
+const MAIL_USER = process.env.EMAIL_USER || process.env.GMAIL_USER
+const MAIL_PASS = process.env.EMAIL_PASS || process.env.GMAIL_APP_PASSWORD
+
 const bookedSlots = new Set<string>()
 
 // Every notification goes to NOTIFY_EMAIL (comma-separated list allowed, or GMAIL_USER) plus Esha.
 const EXTRA_NOTIFY = 'esha@chatversio-ai.com'
 function notifyRecipients(): string {
-  const base = (process.env.NOTIFY_EMAIL || process.env.GMAIL_USER || '').split(',').map(v => v.trim()).filter(Boolean)
+  const base = (process.env.NOTIFY_EMAIL || MAIL_USER || '').split(',').map(v => v.trim()).filter(Boolean)
   const all = [...base, EXTRA_NOTIFY]
   return [...new Set(all.map(v => v.toLowerCase()))].join(', ')
 }
@@ -43,8 +48,8 @@ function getMailTransporter() {
   return nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_APP_PASSWORD,
+      user: MAIL_USER,
+      pass: MAIL_PASS,
     },
   })
 }
@@ -164,7 +169,7 @@ async function sendConfirmationEmail(data: {
   })
 
   await transporter.sendMail({
-    from: `"Chatversio AI" <${process.env.GMAIL_USER}>`,
+    from: `"Chatversio AI" <${MAIL_USER}>`,
     to: data.email,
     subject: `Your Strategy Call is Confirmed - ${formattedDate}`,
     html: `
@@ -280,7 +285,7 @@ async function sendOwnerNotification(data: {
   const transporter = getMailTransporter()
   const platformLabel = data.platform === 'zoom' ? 'Zoom' : 'Google Meet'
   await transporter.sendMail({
-    from: `"Chatversio AI Bookings" <${process.env.GMAIL_USER}>`,
+    from: `"Chatversio AI Bookings" <${MAIL_USER}>`,
     to: notifyRecipients(),
     subject: `New Meeting Booked - ${data.name} on ${data.date} at ${data.time}`,
     html: `
