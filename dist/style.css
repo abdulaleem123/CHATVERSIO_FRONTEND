@@ -541,3 +541,28 @@ button[disabled]{opacity:.7;cursor:progress}
 .booking-steps strong{color:var(--ink)}
 
 .fields select{font:inherit;font-size:14px}
+
+/* Tablet portrait (721-1000px): stack the hero like mobile, but larger, so the artwork is never cut off. */
+@media(min-width:721px) and (max-width:1000px){
+  .hero-layout{display:flex;flex-direction:column;align-items:stretch;min-height:0;padding-top:calc(var(--header) + 44px);padding-bottom:0}
+  .hero-copy{padding-bottom:0;z-index:3}
+  .hero h1{font-size:clamp(84px,12.4vw,112px);line-height:.92}
+  .hero-deck{max-width:540px;font-size:17px;margin:22px 0 24px}
+  .cast-stage{align-self:auto;display:block;height:clamp(500px,72vw,620px);margin:18px 0 0;min-height:0;width:100%;translate:0 0}
+  .stage-fallback{inset:0 0 56px}.fallback-frame{width:106%;left:-3%;top:-2%;height:106%}
+  .portrait-scene,.gear-view{inset:0 0 56px}.portrait-float{inset:2% 8% 0}
+  .hero-3d{inset:-2% -4% 56px;width:108%;height:calc(102% - 56px)}
+  .gear-view .turntable{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);width:min(66vw,520px);min-width:0}
+  .persona-note{left:3%;bottom:10%}
+  .cast-dock{bottom:0}
+  .hero-end{margin-top:14px}
+}
+
+/* Tablet portrait: larger services banner artwork. */
+@media(min-width:721px) and (max-width:1000px){
+  .services-intro .intro-layout{grid-template-columns:1fr;gap:0;min-height:0;padding-block:44px 0}
+  .services-intro .group-portrait{height:clamp(380px,56vw,500px);width:min(100%,760px);justify-self:center;margin-top:24px}
+  .services-intro .group-person{width:44%}
+  .services-intro .group-person:first-of-type{left:4%}.services-intro .group-person:nth-of-type(3){right:4%}.services-intro .group-person:nth-of-type(2){left:28%}
+  .page-intro:not(.services-intro) .intro-art{height:clamp(340px,44vw,440px)}
+}
