@@ -4,7 +4,7 @@
   'use strict';
   const config = window.CHATVERSIO_CONFIG || {};
   const one = selector => document.querySelector(selector);
-  const SUPPORT = 'saif@chatversio-ai.com';
+  const SUPPORT = 'saif@chatversio-ai.com or esha@chatversio-ai.com';
 
   async function post(endpoint, values, key) {
     const controller = new AbortController();

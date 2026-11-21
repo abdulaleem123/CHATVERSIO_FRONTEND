@@ -12,10 +12,16 @@
     "deliver": "node --env-file-if-exists=.env server/deliver.mjs"
   },
   "dependencies": {
+    "axios": "^1.21.1",
+    "googleapis": "^190.0.0",
+    "nodemailer": "^6.10.1",
     "three": "0.180.0"
   },
   "devDependencies": {
-    "esbuild": "0.25.9"
+    "@types/node": "^26.6.6",
+    "@types/nodemailer": "^8.0.2",
+    "esbuild": "0.25.9",
+    "typescript": "^7.0.2"
   },
   "version": "1.0.0",
   "description": "Approved Chatversio AI v7 interface and integration handoff",

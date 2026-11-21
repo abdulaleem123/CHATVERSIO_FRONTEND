@@ -1,6 +1,6 @@
 {
   "framework": null,
-  "buildCommand": null,
-  "installCommand": null,
-  "outputDirectory": "dist"
+  "buildCommand": "echo static site already built in dist",
+  "outputDirectory": "dist",
+  "functions": { "api/*.ts": { "maxDuration": 30 } }
 }
