@@ -7,15 +7,17 @@ const SITE_URL = 'https://chatversio-ai.com'
 const MAIL_USER = process.env.EMAIL_USER || process.env.GMAIL_USER
 const MAIL_PASS = process.env.EMAIL_PASS || process.env.GMAIL_APP_PASSWORD
 
+// SMTP transport. Set SMTP_HOST (e.g. smtppro.zoho.com) and SMTP_PORT (465 or 587); without SMTP_HOST it falls back to Gmail.
+function createMailTransport() {
+  const auth = { user: MAIL_USER, pass: MAIL_PASS }
+  if (!process.env.SMTP_HOST) return nodemailer.createTransport({ service: 'gmail', auth })
+  const port = Number(process.env.SMTP_PORT || 465)
+  return nodemailer.createTransport({ host: process.env.SMTP_HOST, port, secure: port === 465, auth })
+}
+
 
 function getTransporter() {
-  return nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: MAIL_USER,
-      pass: MAIL_PASS,
-    },
-  })
+  return createMailTransport()
 }
 
 // Every notification goes to NOTIFY_EMAIL (comma-separated list allowed, or GMAIL_USER) plus Esha.
